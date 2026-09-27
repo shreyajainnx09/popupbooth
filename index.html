@@ -2,7 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="description" content="A vintage photobooth — 4 poses, 2 prints. Take photo strips with filters and layouts."/>
+<meta name="theme-color" content="#4a2e1a"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="PopUp Booth"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png"/>
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png"/>
 <title>PopUp Booth</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -17,6 +26,7 @@ min-height:100vh;background:url('background.jpeg') center/cover no-repeat fixed;
 background-color:#d4c9b8;
 color:var(--brown);font-family:'DM Sans',sans-serif;
 display:flex;flex-direction:column;align-items:center;
+padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 .screen{display:none;width:100%;flex-direction:column;align-items:center}
 .screen.active{display:flex}
@@ -36,16 +46,14 @@ border-radius:6px;
 box-shadow:0 10px 50px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.25);
 overflow:hidden;min-height:100svh;
 }
-
-/* ══ CURTAIN — sits below the rod ══ */
 .curtain{
 position:absolute;
-top:14px;        /* starts just below rod height */
+top:14px;
 left:100%;
 width:20%;
 bottom:0;
 pointer-events:none;
-z-index:20;      /* below rod z-index:30 */
+z-index:20;
 transition:none;
 overflow:visible;
 }
@@ -63,15 +71,13 @@ z-index:3;padding:0 14px;overflow:hidden;
 width:12px;height:12px;border-radius:50%;border:2.5px solid #b08820;
 background:transparent;box-shadow:inset 0 1px 2px rgba(0,0,0,0.4),0 1px 3px rgba(0,0,0,0.5);flex-shrink:0;
 }
-
-/* ══ ROD — spans booth + curtain width, always on top ══ */
 .c-rod-wrap{
 position:absolute;
 top:0;
 left:0;
-width:calc(100% + 90px);     /* covers booth + the curtain panel beside it */
+width:calc(100% + 90px);
 height:14px;
-z-index:30;      /* above curtain */
+z-index:30;
 pointer-events:none;
 overflow:visible;
 }
@@ -92,7 +98,6 @@ width:20px;height:20px;border-radius:50%;
 background:radial-gradient(circle at 35% 30%,#fce878,#c09030 50%,#6a4010 100%);
 border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 }
-
 .c-fabric{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;background:repeating-linear-gradient(90deg,#5a0000 0px,#5a0000 1px,#8c0a06 3px,#bf1a10 8px,#e02818 14px,#cc1c10 20px,#980e08 27px,#6a0000 33px,#8c0a06 38px,#c41810 44px,#e23020 50px,#c01810 56px,#880a06 62px,#5a0000 66px,#5a0000 67px,#8c0a06 70px);}
 .c-pleat{position:absolute;top:0;bottom:0;width:4px;background:linear-gradient(90deg,rgba(0,0,0,0.45) 0%,rgba(0,0,0,0.1) 50%,transparent 100%);}
 .c-swag{position:absolute;top:0;left:0;right:0;height:90px;z-index:3;background:radial-gradient(ellipse 55% 100% at 15% -5%,#e82818 0%,rgba(150,0,0,0.3) 60%,transparent 80%),radial-gradient(ellipse 55% 100% at 85% -5%,#e82818 0%,rgba(150,0,0,0.3) 60%,transparent 80%),radial-gradient(ellipse 80% 70% at 50% -10%,#b01010 0%,#780000 70%,transparent 100%);}
@@ -102,7 +107,6 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 .c-strand{width:2px;height:32px;background:linear-gradient(180deg,#d0a838 0%,#987020 55%,transparent 100%);border-radius:0 0 1px 1px;}
 .c-fringe{display:flex;gap:1.5px;margin-top:-2px;}
 .c-fringe-strand{width:1.5px;height:12px;background:linear-gradient(180deg,#c09828,transparent);border-radius:0 0 1px 1px;}
-
 .booth-main{display:flex;flex:1;min-height:0}
 .booth-left{width:clamp(52px,15vw,68px);flex-shrink:0;display:flex;flex-direction:column;background:#cfc8bc;border-right:2px solid #a8a090}
 .sign-box{margin:10px 7px 6px;background:#f5f0da;border:2px solid #c8b870;border-radius:4px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:8px 4px;}
@@ -126,6 +130,8 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 .swatch{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,0.1)}
 .open-btn{background:var(--brown);color:#f5e6d0;border:none;border-radius:7px;padding:clamp(9px,2.5vw,11px) 26px;font-family:'DM Sans',sans-serif;font-size:clamp(10px,2.5vw,11px);font-weight:500;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;margin-top:2px;box-shadow:0 2px 8px rgba(74,46,26,0.3);width:100%;}
 .open-btn:active{transform:scale(0.97)}
+.install-app-btn{display:none;align-items:center;justify-content:center;gap:6px;background:transparent;color:var(--brown);border:1.5px solid var(--brown);border-radius:7px;padding:clamp(8px,2.2vw,10px) 20px;font-family:'DM Sans',sans-serif;font-size:clamp(9px,2.3vw,10px);font-weight:500;text-transform:uppercase;letter-spacing:1.2px;cursor:pointer;margin-top:10px;width:100%;}
+.install-app-btn:active{transform:scale(0.97)}
 .booth-bottom{width:100%;flex-shrink:0;display:flex;height:clamp(90px,22vw,120px);background:#cfc8bc;border-top:2px solid #a8a090}
 .bottom-left-blank{width:clamp(52px,15vw,68px);flex-shrink:0;border-right:2px solid #a8a090}
 .booth-opening{flex:1;position:relative;overflow:hidden}
@@ -139,8 +145,6 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 .print-slot{animation:printPeek 7s ease-in-out infinite 3s}
 .booth-feet-bar{width:100%;height:16px;background:#b8b0a0;border-top:2px solid #a8a090;display:flex;justify-content:space-evenly;align-items:flex-end;flex-shrink:0}
 .foot{width:16px;height:9px;background:radial-gradient(ellipse at 50% 20%,#ccc0b0,#777);border-radius:0 0 4px 4px;border:1px solid #666;border-top:none}
-
-/* ═══ OTHER SCREENS ═══ */
 .screen-inner{width:100%;max-width:500px;padding:clamp(16px,4vw,24px) clamp(14px,4vw,20px);min-height:100svh;display:flex;flex-direction:column;align-items:center}
 .site-logo{font-family:'Playfair Display',serif;font-size:clamp(28px,8vw,42px);margin:20px 0}
 .site-logo em{color:var(--gold);font-style:italic}
@@ -161,7 +165,12 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 .btn-action{flex:1;padding:clamp(11px,3vw,15px);background:var(--brown);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;text-transform:uppercase;font-size:12px}
 #msg-input{width:100%;padding:15px;border:1px solid var(--border);border-radius:8px;font-family:'Cormorant Garamond';font-size:clamp(16px,4vw,20px);text-align:center;outline:none;margin-bottom:10px}
 .char-count{font-size:12px;color:var(--gold);margin-bottom:20px}
-
+.strip-color-btn{width:38px;height:38px;border-radius:50%;cursor:pointer;border:2px solid #ccc0a0;box-shadow:0 2px 6px rgba(0,0,0,0.15);transition:border-color .15s,transform .15s;background-size:cover;background-position:center;}
+.strip-color-btn[data-color="white"]{background:#ffffff;}
+.strip-color-btn[data-color="black"]{background:#141414;}
+.strip-color-btn.selected{border-color:var(--gold);transform:scale(1.1);}
+.photo-strip.dark-strip{background:#141414;box-shadow:0 10px 30px rgba(0,0,0,0.35);}
+.photo-strip.dark-strip .strip-msg,.photo-strip.dark-strip .strip-footer{color:#f2ead8 !important;}
 #upload-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2500;align-items:center;justify-content:center;padding:16px;overflow-y:auto;}
 #upload-modal.active{display:flex}
 .upload-modal-content{background:#f5f0e0;border-radius:16px;width:100%;max-width:500px;padding:clamp(24px,6vw,40px) clamp(16px,5vw,30px);box-shadow:0 10px 40px rgba(0,0,0,0.2);position:relative;margin:auto;}
@@ -177,7 +186,6 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 .upload-continue-btn:disabled{opacity:0.5;pointer-events:none;}
 .close-upload-btn{position:absolute;top:15px;right:15px;background:none;border:none;font-size:32px;color:#8a6a3a;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;}
 .close-upload-btn:hover{background:rgba(138,106,58,0.1);}
-
 #animation-screen{position:fixed;inset:0;background:#f4f1ea;display:none;flex-direction:column;align-items:center;padding:clamp(16px,4vw,40px) clamp(12px,4vw,20px);z-index:2000;overflow-y:auto;}
 #animation-screen.active{display:flex}
 @keyframes stripDrop1{0%{transform:translateY(-115%) rotate(-5deg);opacity:0}55%{transform:translateY(7%) rotate(1.5deg);opacity:1}70%{transform:translateY(-3%) rotate(-0.5deg)}82%{transform:translateY(2%) rotate(0.3deg)}92%{transform:translateY(-1%) rotate(0)}100%{transform:translateY(0) rotate(0);opacity:1}}
@@ -199,13 +207,14 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 .photo-strip.strip-1{animation:stripDrop1 1.1s cubic-bezier(0.23,1.12,0.32,1) both;}
 .photo-strip.strip-2{animation:stripDrop2 1.2s cubic-bezier(0.23,1.12,0.32,1) 0.18s both;}
 .strip-frame{width:100%;aspect-ratio:4/3;background:#eee;overflow:hidden}
+.strip-frame.tall{aspect-ratio:3/4;}
 .strip-frame img{width:100%;height:100%;object-fit:cover}
-.strip-msg{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(11px,3vw,16px);margin-top:5px;color:#000000}
-.strip-footer{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(9px,2.5vw,12px);margin-top:5px;color:#000000}
+.strip-msg{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(11px,3vw,16px);color:#000000}
+.strip-footer{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(9px,2.5vw,12px);margin-top:2px;color:#000000}
+.strip-message-area{margin-top:5px;padding:7px 8px 4px;border-radius:6px;}
 .collect-actions{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:20px;opacity:0;animation:fadeUp .5s 1.4s ease both;width:100%;max-width:300px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .btn-collect{padding:10px 25px;background:var(--brown);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;width:100%;}
-
 #privacy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3000;align-items:center;justify-content:center;padding:16px;overflow-y:auto;}
 #privacy-modal.active{display:flex}
 .privacy-content{background:#fff;border-radius:16px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:clamp(20px,5vw,30px);box-shadow:0 10px 40px rgba(0,0,0,0.2);position:relative;margin:auto;}
@@ -218,17 +227,14 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 .privacy-close{position:absolute;top:20px;right:20px;background:none;border:none;font-size:28px;color:#999;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all .2s;}
 .privacy-close:hover{background:rgba(0,0,0,0.1);color:#4a2e1a;}
 .privacy-footer{margin-top:30px;padding-top:15px;border-top:1px solid #e8d8c4;font-size:11px;color:#999;text-align:center;}
-
 @media(max-width:360px){
 .panel-card{padding:8px;}.grid{gap:4px;}.opt-btn{padding:5px 3px;}.upload-grid{grid-template-columns:repeat(2,1fr);}
 }
 </style>
 </head>
 <body>
-
 <div class="screen active" id="landing">
 <div class="booth-and-curtain">
-
   <div class="booth-shell">
     <div class="booth-main">
       <div class="booth-left">
@@ -238,7 +244,7 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
           <span class="sign-letter">O</span><span class="sign-letter">O</span><span class="sign-letter">T</span>
           <span class="sign-letter">H</span><span class="sign-letter">♡</span>
         </div>
-        <div class="sign-tagline">4 poses — 2 prints</div>
+        <div class="sign-tagline" id="pose-tagline">4 poses — 2 prints</div>
         <div class="wood-left">
           <div class="wood-slots"><div class="slot"></div><div class="slot"></div></div>
         </div>
@@ -247,8 +253,15 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
         <div class="panel-content">
           <div class="panel-title">Pop Up <em>Booth</em></div>
           <div class="panel-card">
+            <span class="section-label">Poses</span>
+            <div class="grid" id="poses-grid" style="grid-template-columns:repeat(2,1fr)">
+              <button class="opt-btn selected" onclick="setShots(this,4)"><span class="btn-label">4 Shots</span></button>
+              <button class="opt-btn" onclick="setShots(this,3)"><span class="btn-label">3 Shots</span></button>
+            </div>
+          </div>
+          <div class="panel-card">
             <span class="section-label">Layout</span>
-            <div class="grid">
+            <div class="grid" id="layout-grid">
               <button class="opt-btn selected" onclick="setFmt(this,'portrait')"><span class="btn-label">Portrait</span></button>
               <button class="opt-btn" onclick="setFmt(this,'landscape')"><span class="btn-label">Landscape</span></button>
               <button class="opt-btn" onclick="setFmt(this,'square')"><span class="btn-label">Square</span></button>
@@ -256,14 +269,25 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
           </div>
           <div class="panel-card">
             <span class="section-label">Filter</span>
-            <div class="grid">
+            <div class="grid" id="filter-grid">
               <button class="opt-btn selected" onclick="setFltr(this,'none')"><div class="swatch" style="background:linear-gradient(45deg,#ff9a9e,#fad0c4)"></div><span class="btn-label">Color</span></button>
               <button class="opt-btn" onclick="setFltr(this,'bw')"><div class="swatch" style="background:#888"></div><span class="btn-label">B&amp;W</span></button>
               <button class="opt-btn" onclick="setFltr(this,'vintage')"><div class="swatch" style="background:linear-gradient(135deg,#e8c97a,#c4855a,#8a6040)"></div><span class="btn-label">Vintage</span></button>
+              <button class="opt-btn" onclick="setFltr(this,'warm')"><div class="swatch" style="background:linear-gradient(135deg,#ffb37a,#ff7a4a)"></div><span class="btn-label">Warm</span></button>
+              <button class="opt-btn" onclick="setFltr(this,'cool')"><div class="swatch" style="background:linear-gradient(135deg,#8ec9e8,#4a7fa8)"></div><span class="btn-label">Cool</span></button>
+              <button class="opt-btn" onclick="setFltr(this,'boothbryant')"><div class="swatch" style="background:linear-gradient(135deg,#6a5540,#241c14)"></div><span class="btn-label">Booth</span></button>
+            </div>
+          </div>
+          <div class="panel-card">
+            <span class="section-label">Mirror</span>
+            <div class="grid" id="mirror-grid" style="grid-template-columns:repeat(2,1fr)">
+              <button class="opt-btn selected" onclick="setMirror(this,true)"><span class="btn-label">On</span></button>
+              <button class="opt-btn" onclick="setMirror(this,false)"><span class="btn-label">Off</span></button>
             </div>
           </div>
           <button class="open-btn" onclick="openBooth()">Open the Booth</button>
           <button class="open-btn" style="margin-top:12px;background:#8a7a58;" onclick="openUploadScreen()">Upload Photos</button>
+          <button id="install-app-btn" class="install-app-btn" onclick="installApp()">Install App</button>
         </div>
       </div>
     </div>
@@ -281,9 +305,7 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
       <div class="foot"></div><div class="foot"></div><div class="foot"></div><div class="foot"></div>
     </div>
   </div>
-
   <div class="c-rod-wrap"><div class="c-rod"></div></div>
-
   <div class="curtain" id="curtain">
     <div class="c-rings">
       <div class="c-ring"></div><div class="c-ring"></div><div class="c-ring"></div>
@@ -301,10 +323,8 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
       </div>
     </div>
   </div>
-
 </div>
 </div>
-
 <div class="screen" id="booth">
 <div class="screen-inner">
 <div style="width:100%;display:flex;justify-content:space-between;margin-bottom:10px;font-family:'Playfair Display'">
@@ -323,18 +343,30 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 </div>
 </div>
 </div>
-
 <div class="screen" id="message-screen">
 <div class="screen-inner">
+<div class="result-layout" style="align-items:flex-start;gap:24px;">
+<div style="display:flex;justify-content:center;width:100%;">
+<div class="photo-strip" id="live-preview-strip"></div>
+</div>
+<div style="width:100%;max-width:320px;">
 <div class="card" style="text-align:center">
 <span class="section-label">Write a small message</span>
 <input type="text" id="msg-input" maxlength="25" placeholder="Something sweet..." oninput="updateCount()">
 <div class="char-count" id="char-count">0 / 25</div>
 </div>
+<div class="card" style="text-align:center">
+<span class="section-label">Strip Color</span>
+<div style="display:flex;gap:14px;justify-content:center;padding-top:2px;flex-wrap:wrap;">
+<button class="strip-color-btn selected" data-color="white" onclick="setStripColor(this,'white')" aria-label="White strip"></button>
+<button class="strip-color-btn" data-color="black" onclick="setStripColor(this,'black')" aria-label="Black strip"></button>
+</div>
+</div>
 <button class="btn-action" style="padding:10px 25px;font-size:12px;width:auto;flex:none;" onclick="finishSession()">Finalize Strip</button>
 </div>
 </div>
-
+</div>
+</div>
 <div id="upload-modal">
 <div class="upload-modal-content">
 <button class="close-upload-btn" onclick="closeUploadScreen()">&#x2715;</button>
@@ -348,7 +380,6 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 <button class="upload-continue-btn" id="upload-continue-btn" onclick="proceedWithUploadedPhotos()" disabled>Continue with 0 photos</button>
 </div>
 </div>
-
 <div id="animation-screen">
 <div class="result-layout">
 <div class="about-box">
@@ -373,7 +404,6 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
 </div>
 </div>
 </div>
-
 <div id="privacy-modal">
   <div class="privacy-content">
     <button class="privacy-close" onclick="closePrivacy()">&#x2715;</button>
@@ -415,65 +445,76 @@ border:1.5px solid #5a3808;box-shadow:0 2px 6px rgba(0,0,0,0.55);
     <div class="privacy-footer">Last updated: April 2026</div>
   </div>
 </div>
-
 <canvas id="hidden-canvas" style="display:none"></canvas>
 <script>
-let format='portrait',filter='none',currentShot=0,photos=[],stream=null,userMessage='',uploadedPhotos=[],animFrameId=null;
+let format='portrait',filter='none',mirror=true,currentShot=0,photos=[],stream=null,userMessage='',uploadedPhotos=[],animFrameId=null,stripColor='white',numShots=4;
 const video=document.getElementById('video'),canvas=document.getElementById('filter-canvas'),ctx=canvas.getContext('2d');
-function setFmt(el,val){document.querySelectorAll('#landing .grid').item(0).querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');format=val;}
-function setFltr(el,val){document.querySelectorAll('#landing .grid').item(1).querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');filter=val;}
+function setFmt(el,val){document.getElementById('layout-grid').querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');format=val;}
+function setFltr(el,val){document.getElementById('filter-grid').querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');filter=val;}
+function setMirror(el,val){document.getElementById('mirror-grid').querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');mirror=val;}
+function setStripColor(el,val){document.querySelectorAll('.strip-color-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');stripColor=val;renderLivePreview();}
+function applyStripStyle(el){if(!el)return;if(stripColor==='black'){el.classList.add('dark-strip');}else{el.classList.remove('dark-strip');}}
+function setShots(el,val){document.getElementById('poses-grid').querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');numShots=val;const tag=document.getElementById('pose-tagline');if(tag)tag.innerText=val+' poses — 2 prints';}
 function openUploadScreen(){document.getElementById('upload-modal').classList.add('active');}
 function closeUploadScreen(){document.getElementById('upload-modal').classList.remove('active');uploadedPhotos=[];document.querySelectorAll('.upload-box').forEach(box=>{box.classList.remove('filled');if(box.querySelector('.upload-preview'))box.querySelector('.upload-preview').remove();});updateUploadButton();}
 function handlePhotoUpload(input,index){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){uploadedPhotos[index]=e.target.result;const box=document.querySelectorAll('.upload-box')[index];if(box.querySelector('.upload-preview'))box.querySelector('.upload-preview').remove();const img=document.createElement('img');img.className='upload-preview';img.src=e.target.result;box.appendChild(img);box.classList.add('filled');updateUploadButton();};reader.readAsDataURL(file);}
 function updateUploadButton(){const count=uploadedPhotos.filter(p=>p).length;const btn=document.getElementById('upload-continue-btn');btn.innerText=`Continue with ${count} photo${count!==1?'s':''}`;btn.disabled=count===0;}
-function proceedWithUploadedPhotos(){if(uploadedPhotos.filter(p=>p).length===0)return;photos=uploadedPhotos.filter(p=>p);document.getElementById('upload-modal').classList.remove('active');document.getElementById('landing').classList.remove('active');document.getElementById('message-screen').classList.add('active');}
-async function openBooth(){const btn=document.querySelector('.open-btn');btn.disabled=true;btn.style.opacity='0.5';document.getElementById('curtain').classList.add('sweeping');try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});video.srcObject=stream;await video.play();}catch(e){console.error(e);}setTimeout(()=>{document.getElementById('landing').classList.remove('active');document.getElementById('booth').classList.add('active');document.getElementById('viewfinder').className='viewfinder-wrap '+format;document.getElementById('thumbs').innerHTML=Array(4).fill('<div class="thumb"></div>').join('');startRenderLoop();},1400);}
-function startRenderLoop(){if(animFrameId)cancelAnimationFrame(animFrameId);function loop(){if(!stream)return;if(video.readyState>=2&&video.videoWidth>0){canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.save();ctx.translate(canvas.width,0);ctx.scale(-1,1);drawWithFilter(ctx,video,canvas.width,canvas.height);ctx.restore();}animFrameId=requestAnimationFrame(loop);}animFrameId=requestAnimationFrame(loop);}
-function drawWithFilter(c,src,w,h){c.filter='none';c.drawImage(src,0,0,w,h);if(filter==='bw')applyGrayscale(c,w,h);else if(filter==='vintage')applyVintage(c,w,h);}
-function applyGrayscale(c,w,h){const id=c.getImageData(0,0,w,h);const d=id.data;for(let i=0;i<d.length;i+=4){const g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=d[i+1]=d[i+2]=g;}c.putImageData(id,0,0);}
+function proceedWithUploadedPhotos(){if(uploadedPhotos.filter(p=>p).length===0)return;photos=uploadedPhotos.filter(p=>p);document.getElementById('upload-modal').classList.remove('active');document.getElementById('landing').classList.remove('active');document.getElementById('message-screen').classList.add('active');renderLivePreview();}
+async function openBooth(){const btn=document.querySelector('.open-btn');btn.disabled=true;btn.style.opacity='0.5';document.getElementById('curtain').classList.add('sweeping');try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}});video.srcObject=stream;await video.play();}catch(e){console.error(e);}setTimeout(()=>{document.getElementById('landing').classList.remove('active');document.getElementById('booth').classList.add('active');document.getElementById('viewfinder').className='viewfinder-wrap '+format;document.getElementById('shot-count').innerText=`SHOT 1/${numShots}`;document.getElementById('thumbs').innerHTML=Array(numShots).fill('<div class="thumb"></div>').join('');startRenderLoop();},1400);}
+function startRenderLoop(){if(animFrameId)cancelAnimationFrame(animFrameId);function loop(){if(!stream)return;if(video.readyState>=2&&video.videoWidth>0){canvas.width=video.videoWidth;canvas.height=video.videoHeight;ctx.save();if(mirror){ctx.translate(canvas.width,0);ctx.scale(-1,1);}drawWithFilter(ctx,video,canvas.width,canvas.height);ctx.restore();}animFrameId=requestAnimationFrame(loop);}animFrameId=requestAnimationFrame(loop);}
+function drawWithFilter(c,src,w,h){c.filter='none';c.drawImage(src,0,0,w,h);if(filter==='bw')applyGrayscale(c,w,h);else if(filter==='vintage')applyVintage(c,w,h);else if(filter==='warm')applyWarm(c,w,h);else if(filter==='cool')applyCool(c,w,h);else if(filter==='boothbryant')applyBoothBryant(c,w,h);}
+function applyGrayscale(c,w,h){const id=c.getImageData(0,0,w,h);const d=id.data;for(let i=0;i<d.length;i+=4){let g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];g=Math.min(255,Math.max(0,g*0.82-14));d[i]=d[i+1]=d[i+2]=g;}c.putImageData(id,0,0);}
 function applyVintage(c,w,h){const id=c.getImageData(0,0,w,h);const d=id.data;for(let i=0;i<d.length;i+=4){let r=d[i],g=d[i+1],b=d[i+2];r=r*0.88+22;g=g*0.82+18;b=b*0.72+14;const lum=(r+g+b)/3;const hi=Math.max(0,(lum-160)/95);r+=hi*18;g+=hi*8;b-=hi*12;const ge=Math.max(0,g-Math.max(r,b));g-=ge*0.22;const sh=Math.max(0,(100-lum)/100);b+=sh*10;g+=sh*5;r=sCurve(r);g=sCurve(g);b=sCurve(b);d[i]=Math.min(255,Math.max(0,r));d[i+1]=Math.min(255,Math.max(0,g));d[i+2]=Math.min(255,Math.max(0,b));}c.putImageData(id,0,0);const vg=c.createRadialGradient(w/2,h/2,h*0.28,w/2,h/2,h*0.78);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(30,10,0,0.38)');c.fillStyle=vg;c.fillRect(0,0,w,h);}
 function sCurve(v){const x=v/255;const o=x<0.5?2*x*x*(1.5-x)*1.05:1-2*(1-x)*(1-x)*(1.5-(1-x))*1.05;return Math.min(255,Math.max(0,o*255));}
+function applyWarm(c,w,h){const id=c.getImageData(0,0,w,h);const d=id.data;for(let i=0;i<d.length;i+=4){d[i]=Math.min(255,d[i]*1.12+12);d[i+1]=Math.min(255,d[i+1]*1.04+4);d[i+2]=Math.max(0,d[i+2]*0.88-6);}c.putImageData(id,0,0);}
+function applyCool(c,w,h){const id=c.getImageData(0,0,w,h);const d=id.data;for(let i=0;i<d.length;i+=4){d[i]=Math.max(0,d[i]*0.90-4);d[i+1]=Math.min(255,d[i+1]*1.02);d[i+2]=Math.min(255,d[i+2]*1.16+10);}c.putImageData(id,0,0);}
+function applyBoothBryant(c,w,h){const id=c.getImageData(0,0,w,h);const d=id.data;for(let i=0;i<d.length;i+=4){let g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];let x=g/255;if(x<0.45)x=x*0.5;else x=0.225+(x-0.45)*1.45;x=Math.min(1,Math.max(0,x));let g2=x*255;g2+=(Math.random()-0.5)*14;g2=Math.min(255,Math.max(0,g2));const t=0.3+0.7*Math.pow(g2/255,1.2);const r=Math.min(255,g2+t*40);const gr=Math.min(255,g2+t*12);const b=Math.max(0,g2-t*30);d[i]=r;d[i+1]=gr;d[i+2]=b;}c.putImageData(id,0,0);const vg=c.createRadialGradient(w/2,h/2,h*0.3,w/2,h/2,h*0.85);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,0.5)');c.fillStyle=vg;c.fillRect(0,0,w,h);}
 function startBoothFlow(){document.getElementById('shutter').style.display='none';runTimer();}
 function runTimer(){let t=3;const cd=document.getElementById('countdown');cd.innerText=t;let iv=setInterval(()=>{t--;if(t>0)cd.innerText=t;else{clearInterval(iv);cd.innerText='';snap();}},1000);}
-function snapFrame(){const cap=document.createElement('canvas');cap.width=video.videoWidth;cap.height=video.videoHeight;const c=cap.getContext('2d');c.translate(cap.width,0);c.scale(-1,1);drawWithFilter(c,video,cap.width,cap.height);return cap.toDataURL('image/jpeg',0.92);}
-function snap(){photos[currentShot]=snapFrame();document.getElementById('thumbs').children[currentShot].innerHTML=`<img src="${photos[currentShot]}">`;document.getElementById('next-btn').innerText=currentShot===3?'Proceed':'Continue';document.getElementById('actions').classList.add('visible');}
+function snapFrame(){const cap=document.createElement('canvas');cap.width=video.videoWidth;cap.height=video.videoHeight;const c=cap.getContext('2d');if(mirror){c.translate(cap.width,0);c.scale(-1,1);}drawWithFilter(c,video,cap.width,cap.height);return cap.toDataURL('image/jpeg',0.92);}
+function snap(){photos[currentShot]=snapFrame();document.getElementById('thumbs').children[currentShot].innerHTML=`<img src="${photos[currentShot]}">`;document.getElementById('next-btn').innerText=currentShot===numShots-1?'Proceed':'Continue';document.getElementById('actions').classList.add('visible');}
 function retake(){document.getElementById('actions').classList.remove('visible');runTimer();}
-function confirmAndNext(){document.getElementById('actions').classList.remove('visible');if(currentShot<3){currentShot++;document.getElementById('shot-count').innerText=`SHOT ${currentShot+1}/4`;runTimer();}else{if(animFrameId){cancelAnimationFrame(animFrameId);animFrameId=null;}document.getElementById('booth').classList.remove('active');document.getElementById('message-screen').classList.add('active');}}
-function updateCount(){document.getElementById('char-count').innerText=document.getElementById('msg-input').value.length+' / 25';}
-function buildStripHTML(msg,dateStr){return photos.map(p=>`<div class="strip-frame"><img src="${p}"></div>`).join('')+`<div class="strip-msg">${msg}</div><div class="strip-footer">${dateStr}</div>`;}
-function finishSession(){userMessage=document.getElementById('msg-input').value;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;document.getElementById('message-screen').classList.remove('active');document.getElementById('animation-screen').classList.add('active');const date=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});const html=buildStripHTML(userMessage,date);const s1=document.getElementById('final-strip-1');const s2=document.getElementById('final-strip-2');s1.innerHTML=html;s2.innerHTML=html;s1.style.animation='none';s1.offsetHeight;s1.style.animation='stripDrop1 1.1s cubic-bezier(0.23,1.12,0.32,1) both';s2.style.animation='none';s2.offsetHeight;s2.style.animation='stripDrop2 1.2s cubic-bezier(0.23,1.12,0.32,1) 0.18s both';}
-function downloadStrip(){const c=document.getElementById('hidden-canvas');const cx=c.getContext('2d');c.width=400;c.height=1450;cx.fillStyle='#fff';cx.fillRect(0,0,c.width,c.height);let loaded=0;photos.forEach((p,i)=>{const img=new Image();img.onload=()=>{cx.drawImage(img,20,20+i*320,360,280);loaded++;if(loaded===photos.length){cx.fillStyle='#4a2e1a';cx.textAlign='center';cx.font='italic 22px Georgia';cx.fillText(userMessage,200,1340);cx.font='14px Arial';cx.globalAlpha=0.5;cx.fillText(new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}),200,1380);const dataUrl=c.toDataURL('image/jpeg',0.92);const a1=document.createElement('a');a1.download='popupbooth-strip-1.jpg';a1.href=dataUrl;a1.click();setTimeout(()=>{const a2=document.createElement('a');a2.download='darling-strip-2.jpg';a2.href=dataUrl;a2.click();},600);}};img.src=p;});}
+function confirmAndNext(){document.getElementById('actions').classList.remove('visible');if(currentShot<numShots-1){currentShot++;document.getElementById('shot-count').innerText=`SHOT ${currentShot+1}/${numShots}`;runTimer();}else{if(animFrameId){cancelAnimationFrame(animFrameId);animFrameId=null;}document.getElementById('booth').classList.remove('active');document.getElementById('message-screen').classList.add('active');renderLivePreview();}}
+function updateCount(){document.getElementById('char-count').innerText=document.getElementById('msg-input').value.length+' / 25';renderLivePreview();}
+function renderLivePreview(){const strip=document.getElementById('live-preview-strip');if(!strip)return;const msg=document.getElementById('msg-input')?document.getElementById('msg-input').value:'';const date=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});strip.innerHTML=buildStripHTML(msg,date);applyStripStyle(strip);}
+function buildStripHTML(msg,dateStr){const frameClass=numShots===3?'strip-frame tall':'strip-frame';return photos.map(p=>`<div class="${frameClass}"><img src="${p}"></div>`).join('')+`<div class="strip-message-area"><div class="strip-msg">${msg}</div><div class="strip-footer">${dateStr}</div></div>`;}
+function finishSession(){userMessage=document.getElementById('msg-input').value;if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;document.getElementById('message-screen').classList.remove('active');document.getElementById('animation-screen').classList.add('active');const date=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});const html=buildStripHTML(userMessage,date);const s1=document.getElementById('final-strip-1');const s2=document.getElementById('final-strip-2');s1.innerHTML=html;s2.innerHTML=html;applyStripStyle(s1);applyStripStyle(s2);s1.style.animation='none';s1.offsetHeight;s1.style.animation='stripDrop1 1.1s cubic-bezier(0.23,1.12,0.32,1) both';s2.style.animation='none';s2.offsetHeight;s2.style.animation='stripDrop2 1.2s cubic-bezier(0.23,1.12,0.32,1) 0.18s both';}
 function openPrivacy(){document.getElementById('privacy-modal').classList.add('active');}
 function closePrivacy(){document.getElementById('privacy-modal').classList.remove('active');}
 document.getElementById('privacy-modal').addEventListener('click',function(e){if(e.target===this)closePrivacy();});
 document.getElementById('upload-modal').addEventListener('click',function(e){if(e.target===this)closeUploadScreen();});
 </script>
 <script>
-  // Disable Right-Click
   document.addEventListener('contextmenu', (e) => e.preventDefault());
-  // Disable specific keyboard shortcuts
   document.onkeydown = function(e) {
-    // Disable F12 (DevTools)
-    if (e.keyCode == 123) {
-      return false;
-    }
-    // Disable Ctrl+Shift+I (Inspect Element)
-    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-      return false;
-    }
-    // Disable Ctrl+Shift+J (Console)
-    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-      return false;
-    }
-    // Disable Ctrl+U (View Source)
-    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-      return false;
-    }
-    // Disable Ctrl+S (Save Page)
-    if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) {
-      return false;
-    }
+    if (e.keyCode == 123) { return false; }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; }
+    if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; }
+    if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { return false; }
   };
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  const btn = document.getElementById('install-app-btn');
+  if (btn) btn.style.display = 'inline-flex';
+});
+async function installApp() {
+  if (!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  const btn = document.getElementById('install-app-btn');
+  if (btn) btn.style.display = 'none';
+}
 </script>
 </body>
 </html>
